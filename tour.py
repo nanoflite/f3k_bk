@@ -5,6 +5,8 @@ import glob
 import os.path
 import json
 import pystache
+import codecs
+import markdown
 
 class PilotCollection(object):
     
@@ -187,6 +189,9 @@ def readFile(fileName):
         for row in reader:
             yield { 'contest': name, 'name': row['Name'], 'score': row['Score'] } 
 
+def sort(table):
+    return sorted( table, key = lambda row: int(row['row'][len(row['row'])-1]['value']) )
+
 tourCollection = TourCollection()
 pilotCollection = PilotCollection()
 
@@ -223,30 +228,56 @@ for tour in tourCollection.each():
         pilot.findTourScore( tour ).setRank( rank )
         rank += 1
 
+toursModel = []
+
 header = []
 header.append( { 'value': 'Name' } )
 for tour in tourCollection.each():
-    for contest in tour.eachContest():
-        header.append( { 'value': "%s (%s)" % (contest, tour.name) } )
-    header.append( { 'value': "total (%s)" % tour.name } )
-    header.append( { 'value': "%% (%s)" % tour.name } )
-    header.append( { 'value': "rank (%s)" % tour.name } )
-header.append( { 'value': 'WK Total' } )
-header.append( { 'value': 'WK Rank' } )
+    header.append( { 'value': "%s" % tour.name } )
+header.append( { 'value': 'total' } )
+header.append( { 'value': 'rank' } )
 body = []
 for pilot in pilotCollection.each():
     row = []
     row.append( { 'value': pilot.name } )
     for tour in tourCollection.each():
+        row.append( { 'value': "%0.2f" % pilot.findTourScore( tour ).score } )
+    row.append( { 'value': "%0.2f" % pilot.totalScore() } )
+    row.append( { 'value': "%d" % pilot.rank } )
+    body.append( { 'row': row } )
+
+body = sort( body )
+
+model = { 'header': header, 'body': body }
+
+toursModel = []
+for tour in tourCollection.each():
+    header = []
+    header.append( { 'value': 'Name' } )
+    for contest in tour.eachContest():
+        header.append( { 'value': "%s" % contest } )
+    header.append( { 'value': 'total' } )
+    header.append( { 'value': '%' } )
+    header.append( { 'value': 'rank' } )
+    body = []
+    for pilot in pilotCollection.each():
+        row = []
+        row.append( { 'value': pilot.name } )
         for contest in tour.eachContest():
             row.append( { 'value': "%0.2f" % pilot.findScore( tour.name, contest ).score, 'class': pilot.findScore( tour.name, contest ).attributes() } )
         row.append( { 'value': "%0.2f" % pilot.findTourScore( tour ).score } )
         row.append( { 'value': "%0.2f" % pilot.findTourScore( tour ).percent } )
         row.append( { 'value': "%d" % pilot.findTourScore( tour ).rank } )
-    row.append( { 'value': "%0.2f" % pilot.totalScore() } )
-    row.append( { 'value': "%d" % pilot.rank } )
-    body.append( { 'row': row } )
-model = { 'header': header, 'body': body }
+        body.append( { 'row': row } )
+    body = sort( body )
+    toursModel.append( { 'name': tour.name, 'header': header, 'body': body } )
+
+model['tours'] = toursModel
+
+fp = codecs.open("home.md", mode="r", encoding="utf-8")
+md = fp.read()
+html = markdown.markdown(md)
+model['home'] = html
 
 renderer = pystache.Renderer()
 print renderer.render_path( './index.mustache', model )
