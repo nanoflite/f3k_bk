@@ -40,6 +40,7 @@ class Pilot(object):
         self.scores = []
         self.tourScores = []
         self.rank = -1
+        self.percent = 0
 
     def addScore(self, score):
         self.scores.append(score)
@@ -77,6 +78,12 @@ class Pilot(object):
 
     def totalScore(self):
         return sum( [ score.score for score in self.tourScores ] )
+
+    def totalPercent(self):
+        return self.percent
+        
+    def calcPercent(self, maximum):
+        self.percent = 100 * self.totalScore() / maximum 
 
     def setRank(self, rank):
         self.rank = rank
@@ -219,7 +226,10 @@ for tour in tourCollection.each():
 
 rank = 1
 for pilot in sorted( pilotCollection.each(), key = lambda pilot: -1 * pilot.totalScore() ):
+    if ( rank == 1 ):
+        total = pilot.totalScore()    
     pilot.setRank( rank )
+    pilot.calcPercent( total )
     rank += 1
 
 for tour in tourCollection.each():
@@ -235,6 +245,7 @@ header.append( { 'value': 'Name' } )
 for tour in tourCollection.each():
     header.append( { 'value': "%s" % tour.name } )
 header.append( { 'value': 'total' } )
+header.append( { 'value': '%' } )
 header.append( { 'value': 'rank' } )
 body = []
 for pilot in pilotCollection.each():
@@ -243,6 +254,7 @@ for pilot in pilotCollection.each():
     for tour in tourCollection.each():
         row.append( { 'value': "%0.2f" % pilot.findTourScore( tour ).score } )
     row.append( { 'value': "%0.2f" % pilot.totalScore() } )
+    row.append( { 'value': "%0.2f" % pilot.totalPercent() } )
     row.append( { 'value': "%d" % pilot.rank } )
     body.append( { 'row': row } )
 
