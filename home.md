@@ -4,7 +4,7 @@ Welcome to the overview of the results for the Belgian championship F3K season 2
 
 ## Belgian contests
 
-We flew 6 contests this year, from which 4 count for the end result. Four each pilot, we retire the 2 least scores.
+We flew 6 contests this year, from which 4 count for the end result. For each pilot, we retire the 2 least scores.
 
 ## International contests
 
