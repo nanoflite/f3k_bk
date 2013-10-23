@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>BK 2012 results and WC selections</title>
+        <title>BK 2013 results</title>
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media="screen">
         <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css" media="screen">
         <link rel="stylesheet" type="text/css" href="css/DT_bootstrap.css" media="screen">
@@ -13,13 +13,12 @@
             <img src="img/background.jpeg" class="stretch" alt="" />
         </div>
         <div class="container">
-            <h1 class="title">Belgian Championship F3K 2012</h1>
+            <h1 class="title">Belgian Championship F3K 2013</h1>
             <ul class="nav nav-tabs" id="tabs">
               <li class="active"><a href="#home">Home</a></li>
               {{#tours}}
               <li><a href="#tour_{{name}}">{{name}}</a></li>
               {{/tours}}
-              <li><a href="#tour_wc">Selection WC</a></li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active" id="home">
@@ -48,27 +47,6 @@
                     </table>
                 </div>
                 {{/tours}}
-                <div class="tab-pane" id="tour_wc">
-                <h1>Selection World Championship 2013.</h1>
-                <table class="table table-striped table-bordered table-hover table-condensed" id="scoreTable">
-                    <thead>
-                        <tr>
-                            {{#header}}
-                            <th>{{value}}</th>
-                            {{/header}}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {{#body}}
-                            <tr>
-                                {{#row}}
-                                <td class="{{class}}">{{value}}</td>
-                                {{/row}}
-                            </tr>
-                        {{/body}}
-                    </tbody>
-                </table>
-                </div>
             </div>
         </div>
         <script src="http://code.jquery.com/jquery-latest.js"></script>
