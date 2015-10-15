@@ -3,7 +3,7 @@
     <head>
         <title>BK 2015 results</title>
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media="screen">
-        <link rel="stylesheet" type="text/css" href="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/css/jquery.dataTables.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" media="screen">
         <link rel="stylesheet" type="text/css" href="css/DT_bootstrap.css" media="screen">
         <link rel="stylesheet" type="text/css" href="css/screen.css" media="screen">
         <link rel="stylesheet" type="text/css" href="css/print.css" media="print">
@@ -51,7 +51,7 @@
         </div>
         <script src="http://code.jquery.com/jquery-latest.js"></script>
         <script src="js/bootstrap.min.js"></script>
-        <script type="text/javascript" charset="utf8" src="http://ajax.aspnetcdn.com/ajax/jquery.dataTables/1.9.4/jquery.dataTables.min.js"></script>
+        <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
         <script src="js/DT_bootstrap.js"></script>
         <script type="text/javascript">
             var tours = [];
@@ -61,7 +61,11 @@
             {{/tours}}
             $(document).ready(function() {
                 for ( var i in tours ) {
-                    $(tours[i]).dataTable({ "aaSorting": [] }); 
+                    $(tours[i]).dataTable({ 
+                      "aaSorting": [],
+                      "pageLength": 50,
+                      "autoWidth": true
+                    }); 
                 }
                 $('#tabs a').click(function (e) {
                   e.preventDefault();
