@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
+import sys
 import csv
 import glob
 import os.path
@@ -292,4 +293,4 @@ html = markdown.markdown(md)
 model['home'] = html
 
 renderer = pystache.Renderer(string_encoding='utf-8')
-print renderer.render_path( './index.mustache', model )
+print renderer.render_path( sys.argv[1], model )
