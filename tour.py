@@ -292,4 +292,7 @@ html = markdown.markdown(md)
 model['home'] = html
 
 renderer = pystache.Renderer(string_encoding='utf-8')
-print renderer.render_path( './index.mustache', model )
+
+f = codecs.open('site/index.html','w','utf8')
+f.write(renderer.render_path( './index.mustache', model ))
+f.close()

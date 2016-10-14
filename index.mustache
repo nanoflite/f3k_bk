@@ -1,10 +1,10 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>BK 2015 results</title>
+        <title>BK 2016 results</title>
         <link rel="stylesheet" type="text/css" href="css/bootstrap.min.css" media="screen">
-        <link rel="stylesheet" type="text/css" href="http://cdn.datatables.net/1.10.9/css/jquery.dataTables.min.css" media="screen">
-        <link rel="stylesheet" type="text/css" href="css/DT_bootstrap.css" media="screen">
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs-3.3.6/jqc-1.12.3/pdfmake-0.1.18/dt-1.10.12/b-1.2.2/b-html5-1.2.2/b-print-1.2.2/datatables.css"/>
+        <!-- link rel="stylesheet" type="text/css" href="css/DT_bootstrap.css" media="screen" -->
         <link rel="stylesheet" type="text/css" href="css/screen.css" media="screen">
         <link rel="stylesheet" type="text/css" href="css/print.css" media="print">
     </head>     
@@ -13,7 +13,7 @@
             <img src="img/background.jpeg" class="stretch" alt="" />
         </div>
         <div class="container">
-            <h1 class="title">Belgian Championship F3K 2015</h1>
+            <h1 class="title">Belgian Championship F3K 2016</h1>
             <ul class="nav nav-tabs" id="tabs">
               <li class="active"><a href="#home">Home</a></li>
               {{#tours}}
@@ -51,8 +51,8 @@
         </div>
         <script src="http://code.jquery.com/jquery-latest.js"></script>
         <script src="js/bootstrap.min.js"></script>
-        <script type="text/javascript" charset="utf8" src="http://cdn.datatables.net/1.10.9/js/jquery.dataTables.min.js"></script>
-        <script src="js/DT_bootstrap.js"></script>
+        <script type="text/javascript" src="https://cdn.datatables.net/v/bs-3.3.6/jqc-1.12.3/pdfmake-0.1.18/dt-1.10.12/b-1.2.2/b-html5-1.2.2/b-print-1.2.2/datatables.js"></script>
+        <!-- script src="js/DT_bootstrap.js"></script -->
         <script type="text/javascript">
             var tours = [];
             tours.push( '#scoreTable' );
@@ -61,11 +61,14 @@
             {{/tours}}
             $(document).ready(function() {
                 for ( var i in tours ) {
-                    $(tours[i]).dataTable({ 
-                      "aaSorting": [],
-                      "pageLength": 50,
-                      "autoWidth": true
+                    var table = $(tours[i]).dataTable({ 
+                      aaSorting: [],
+                      pageLength: 50,
+                      autoWidth: true,
+                      buttons: [ 'csv', 'excel', 'pdf' ]
                     }); 
+                    //table.buttons().container()
+                    //      .appendTo( $('.col-sm-6:eq(0)', table.table().container() ) );
                 }
                 $('#tabs a').click(function (e) {
                   e.preventDefault();

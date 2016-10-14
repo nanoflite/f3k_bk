@@ -1,10 +1,12 @@
-# 2015 F3K Belgian Championship
+# 2016 F3K Belgian Championship
 
-Welcome to the overview of the results for the Belgian championship F3K season 2015.
+Welcome to the overview of the results for the Belgian championship F3K season 2016.
 
 ## Belgian contests
 
-We flew 7 contests this year, from which 6 count for the end result. For each pilot, we retire the worst score.
+We flew 7 contests this year, from which 5 count for the end result. For each pilot, we retire the worst score.
+
+This score table only contains results for the Belgian pilots.
 
 ## How was this made?
 
