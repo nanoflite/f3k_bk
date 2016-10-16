@@ -1,3 +1,4 @@
 *.swp
 site/index.html
 .site
+/.idea

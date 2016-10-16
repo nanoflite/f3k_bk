@@ -7,6 +7,9 @@ import json
 import pystache
 import codecs
 import markdown
+import csv
+
+export_csv = True
 
 class PilotCollection(object):
     
@@ -296,3 +299,18 @@ renderer = pystache.Renderer(string_encoding='utf-8')
 f = codecs.open('site/index.html','w','utf8')
 f.write(renderer.render_path( './index.mustache', model ))
 f.close()
+
+if export_csv:
+    for tour in toursModel:
+        with open("%s.csv" % tour['name'], 'wb') as csvFile:
+            csvWriter = csv.writer(csvFile, delimiter=',', quotechar='"', quoting=csv.QUOTE_ALL)
+            header = map(lambda h: h['value'], tour['header'])
+            csvWriter.writerow(header)
+            for row in tour['body']:
+                pilot = []
+                for cell in row['row']:
+                    if 'class' in cell and cell['class'] == 'scrapped':
+                        pilot.append("%s (s)" % cell['value'])
+                    else:
+                        pilot.append("%s" % cell['value'])
+                csvWriter.writerow(pilot)
